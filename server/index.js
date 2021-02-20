@@ -37,8 +37,10 @@ app.use(passport.initialize());
 let passportMiddleware = require("./middleware/passport");
 passportMiddleware(passport);
 
-// ASsign socket object to every request
+// Assign socket object to every request
 app.use((req, res, next) => {
   req.io = io;
   next();
 });
+
+// Routes
