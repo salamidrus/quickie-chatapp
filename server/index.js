@@ -35,6 +35,7 @@ mongoose
 app.use(passport.initialize());
 // Passport function
 let passportMiddleware = require("./middleware/passport");
+// Passport Config
 passportMiddleware(passport);
 
 // Assign socket object to every request
