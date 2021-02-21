@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const bcrypt = require("bcryptjs");
+const SALT_ROUNDS = Number(process.env.SALT_ROUNDS);
 
 // Create Schema for Users
 const UserSchema = new Schema({
@@ -13,6 +15,7 @@ const UserSchema = new Schema({
   },
   password: {
     type: String,
+    set: (encrypt = (val) => bcrypt.hashSync(val, SALT_ROUNDS)),
     required: true,
   },
   date: {

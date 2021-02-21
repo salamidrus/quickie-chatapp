@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const cors = require("cors");
+require("dotenv").config();
 
 const app = express();
 
@@ -11,7 +12,7 @@ const server = app.listen(port, () =>
   console.log(`Server running on port ${port}`)
 );
 
-const io = require("socket.io").listen(server);
+const io = require("socket.io")(server, { serveClient: false });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -45,3 +46,6 @@ app.use((req, res, next) => {
 });
 
 // Routes
+let userRoutes = require("./routes/users");
+
+app.use("/users", userRoutes);

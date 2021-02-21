@@ -9,4 +9,6 @@ router.get(
   userControllers.GetAll
 );
 
+router.post("/register", userControllers.Register);
+
 module.exports = router;
