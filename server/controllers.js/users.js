@@ -106,8 +106,8 @@ exports.Login = async (req, res) => {
     }
     // Sign token
     let payload = {
-      id: newUser.id,
-      name: newUser.name,
+      id: user.id,
+      name: user.name,
     };
 
     let token = await jwt.sign(payload, SECRET_KEY);

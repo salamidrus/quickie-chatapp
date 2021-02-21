@@ -10,5 +10,6 @@ router.get(
 );
 
 router.post("/register", userControllers.Register);
+router.post("/login", userControllers.Login);
 
 module.exports = router;
