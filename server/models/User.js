@@ -15,6 +15,7 @@ const UserSchema = new Schema({
   },
   password: {
     type: String,
+    // Hash password before saving in database
     set: (encrypt = (val) => bcrypt.hashSync(val, SALT_ROUNDS)),
     required: true,
   },

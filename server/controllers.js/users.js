@@ -6,6 +6,7 @@ const validateLoginInput = require("../validation/login");
 // Library
 const jwt = require("jsonwebtoken");
 const SECRET_KEY = process.env.SECRET_KEY;
+const bcrypt = require("bcryptjs");
 
 exports.GetAll = async (req, res) => {
   try {
@@ -31,6 +32,7 @@ exports.Register = async (req, res) => {
     // Form Validation
     const { errors, isValid } = validateRegisterInput(req.body);
 
+    // Check Validation
     if (!isValid)
       return res.status(400).json({
         success: false,
@@ -47,19 +49,18 @@ exports.Register = async (req, res) => {
 
     let newUser = await User.create(req.body);
 
+    // Sign token
     let payload = {
       id: newUser.id,
       name: newUser.name,
     };
-
-    // Sign token
     let token = await jwt.sign(payload, SECRET_KEY);
 
     req.io.sockets.emit("users", newUser.username);
 
     res.status(200).json({
       success: true,
-      message: "Successfully register the token!",
+      message: "Successfully register the data!",
       token: "Bearer " + token,
       name: newUser.name,
     });
@@ -69,5 +70,60 @@ exports.Register = async (req, res) => {
       message: err.message || "Failure to create the data!",
     });
   }
-  // Hash password before saving in database
+};
+
+exports.Login = async (req, res) => {
+  try {
+    // Form Validation
+    const { errors, isValid } = validateLoginInput(req.body);
+
+    // Check Validation
+    if (!isValid)
+      return res.status(400).json({
+        success: false,
+        errors,
+      });
+
+    const { username, password } = req.body;
+
+    // Find user by username
+    let user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found!",
+      });
+    }
+
+    let isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(400).json({
+        success: false,
+        message: "Incorrect Password!",
+      });
+    }
+    // Sign token
+    let payload = {
+      id: newUser.id,
+      name: newUser.name,
+    };
+
+    let token = await jwt.sign(payload, SECRET_KEY);
+
+    res.status(200).json({
+      success: true,
+      message: "Successfully logged in!",
+      token: "Bearer " + token,
+      name: user.name,
+      username: user.username,
+      userId: user._id,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message || "Failure to create the data!",
+    });
+  }
 };
