@@ -17,7 +17,7 @@ exports.GetAllGlobalMessages = async (req, res) => {
   } catch (err) {
     res.status(500).json({
       success: false,
-      message: "Failure to Get the Data!",
+      message: err.message || "Failure to Get the Data!",
     });
   }
 };
@@ -39,7 +39,7 @@ exports.CreateGlobalMessage = async (req, res) => {
   } catch (err) {
     res.status(500).json({
       success: false,
-      message: "Failure to Get the Data!",
+      message: err.message || "Failure to Create the Data!",
     });
   }
 };
@@ -61,7 +61,7 @@ exports.GetConversationsList = async (req, res) => {
   } catch (err) {
     res.status(500).json({
       success: false,
-      message: "Failure to Get the Data!",
+      message: err.message || "Failure to Get the Data!",
     });
   }
 };
@@ -88,7 +88,52 @@ exports.GetMessagesFromConversation = async (req, res) => {
   } catch (err) {
     res.status(500).json({
       success: false,
-      message: "Failure to Get the Data!",
+      message: err.message || "Failure to Get the Data!",
+    });
+  }
+};
+
+exports.CreatePrivateMessage = async (req, res) => {
+  try {
+    let from = mongoose.Types.ObjectId(req.user.userId);
+    let to = req.body.to;
+
+    let conversation = await Conversation.findOneAndUpdate(
+      {
+        recipients: {
+          $all: [{ $elemMatch: { $eq: from } }, { $elemMatch: { $eq: to } }],
+        },
+      },
+      {
+        recipients: [req.user.userId, to],
+        lastMessage: req.body.body,
+        date: Date.now(),
+      },
+      {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true,
+      }
+    );
+
+    await Message.create({
+      conversation: conversation._id,
+      to: to,
+      from: req.user._id,
+      body: req.body.body,
+    });
+
+    req.io.sockets.emit("messages", req.body.body);
+
+    res.status(200).json({
+      success: true,
+      message: "Successfully creating a private message!",
+      conversationId: conversation._id,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message || "Failure to Create the Message!",
     });
   }
 };
