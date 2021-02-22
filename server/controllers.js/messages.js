@@ -18,3 +18,25 @@ exports.GetAllGlobalMessages = async (req, res) => {
     });
   }
 };
+
+exports.CreateGlobalMessage = async (req, res) => {
+  try {
+    let data = await GlobalMessage.create({
+      from: req.user.userId,
+      body: req.body.body,
+    });
+
+    req.io.sockets.emit("messages", req.body.body);
+
+    res.status(200).json({
+      success: true,
+      message: "Successfully create global message!",
+      data,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Failure to Get the Data!",
+    });
+  }
+};
