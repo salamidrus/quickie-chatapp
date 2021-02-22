@@ -25,7 +25,7 @@ exports.GetAllGlobalMessages = async (req, res) => {
 exports.CreateGlobalMessage = async (req, res) => {
   try {
     let data = await GlobalMessage.create({
-      from: req.user.userId,
+      from: req.user._id,
       body: req.body.body,
     });
 
@@ -46,7 +46,7 @@ exports.CreateGlobalMessage = async (req, res) => {
 
 exports.GetConversationsList = async (req, res) => {
   try {
-    let from = mongoose.Types.ObjectId(req.user.userId);
+    let from = mongoose.Types.ObjectId(req.user._id);
     let data = await Conversation.find({
       recipients: {
         $all: [{ $elemMatch: { $eq: from } }],
@@ -68,7 +68,7 @@ exports.GetConversationsList = async (req, res) => {
 
 exports.GetMessagesFromConversation = async (req, res) => {
   try {
-    let user1 = mongoose.Types.ObjectId(req.user.userId);
+    let user1 = mongoose.Types.ObjectId(req.user._id);
     let user2 = req.query.userId;
 
     let data = await Message.find({
@@ -95,7 +95,7 @@ exports.GetMessagesFromConversation = async (req, res) => {
 
 exports.CreatePrivateMessage = async (req, res) => {
   try {
-    let from = mongoose.Types.ObjectId(req.user.userId);
+    let from = mongoose.Types.ObjectId(req.user._id);
     let to = req.body.to;
 
     let conversation = await Conversation.findOneAndUpdate(
@@ -105,7 +105,7 @@ exports.CreatePrivateMessage = async (req, res) => {
         },
       },
       {
-        recipients: [req.user.userId, to],
+        recipients: [req.user._id, to],
         lastMessage: req.body.body,
         date: Date.now(),
       },
