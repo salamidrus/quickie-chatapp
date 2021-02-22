@@ -44,7 +44,7 @@ exports.CreateGlobalMessage = async (req, res) => {
   }
 };
 
-exports.GetConversations = async (req, res) => {
+exports.GetConversationsList = async (req, res) => {
   try {
     let from = mongoose.Types.ObjectId(req.user.userId);
     let data = await Conversation.find({
@@ -56,6 +56,33 @@ exports.GetConversations = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Successfully get the conversations!",
+      data,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Failure to Get the Data!",
+    });
+  }
+};
+
+exports.GetMessagesFromConversation = async (req, res) => {
+  try {
+    let user1 = mongoose.Types.ObjectId(req.user.userId);
+    let user2 = req.query.userId;
+
+    let data = await Message.find({
+      $or: [
+        { $and: [{ to: user1 }, { from: user2 }] },
+        { $and: [{ to: user2 }, { from: user1 }] },
+      ],
+    })
+      .populate("from", "name username")
+      .populate("to", "name username");
+
+    res.status(200).json({
+      success: true,
+      message: "Successfully get messages from conversation!",
       data,
     });
   } catch (err) {
