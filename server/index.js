@@ -47,5 +47,7 @@ app.use((req, res, next) => {
 
 // Routes
 let userRoutes = require("./routes/users");
+let messageRoutes = require("./routes/messages");
 
 app.use("/users", userRoutes);
+app.use("/messages", messageRoutes);
