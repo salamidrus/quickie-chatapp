@@ -5,6 +5,8 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider } from "@material-ui/styles";
 import { SnackbarProvider } from "notistack";
 
+import history from "./utilities/history";
+
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -31,7 +33,11 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <SnackbarProvider maxSnack={3} autoHideDuration={3000}></SnackbarProvider>
+      <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
+        <Router history={history}>
+          <Route path="/" exact component={Home} />
+        </Router>
+      </SnackbarProvider>
     </ThemeProvider>
   );
 }
