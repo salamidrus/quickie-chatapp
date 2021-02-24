@@ -6,6 +6,7 @@ import { ThemeProvider } from "@material-ui/styles";
 import { SnackbarProvider } from "notistack";
 
 import history from "./utilities/history";
+import Home from "./components/Home/Home";
 
 const theme = createMuiTheme({
   palette: {

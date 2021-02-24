@@ -26,7 +26,7 @@ export function useLogin() {
       body: JSON.stringify({ username, password }),
     };
 
-    return fetch("/api/users/login", requestOptions)
+    return fetch(`${process.env.REACT_APP_API_URL}/users/login`, requestOptions)
       .then(handleResponse)
       .then((user) => {
         localStorage.setItem("currentUser", JSON.stringify(user));
@@ -54,7 +54,10 @@ export function useRegister() {
       body: JSON.stringify({ name, username, password, confirmPassword }),
     };
 
-    return fetch("/api/users/register", requestOptions)
+    return fetch(
+      `${process.env.REACT_APP_API_URL}/users/register`,
+      requestOptions
+    )
       .then(handleResponse)
       .then((user) => {
         localStorage.setItem("currentUser", JSON.stringify(user));
