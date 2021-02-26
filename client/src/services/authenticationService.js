@@ -60,12 +60,14 @@ export function useRegister() {
     )
       .then(handleResponse)
       .then((user) => {
+        console.log(user);
         localStorage.setItem("currentUser", JSON.stringify(user));
         currentUserSubject.next(user);
 
         return user;
       })
       .catch((response) => {
+        console.log(response);
         if (response) {
           enqueueSnackbar(response, {
             variant: "error",

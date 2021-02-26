@@ -17,7 +17,7 @@ const useHandleResponse = () => {
       }
 
       const error = (data && data.message) || response.statusText;
-      return error;
+      return Promise.reject(error);
     }
 
     return data;
