@@ -114,7 +114,7 @@ const Login = (props) => {
         </Grid>
         <Grid item xs={9}>
           <Typography>
-            <Link onClick={() => props.handleClick("register")} href="#">
+            <Link onClick={() => props.handleClick("register")}>
               Don't have an account?
             </Link>
           </Typography>

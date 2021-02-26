@@ -3,6 +3,7 @@ import Container from "@material-ui/core/Container";
 
 import history from "../../utilities/history";
 import Login from "./Login";
+import Register from "./Register";
 import { authenticationService } from "../../services/authenticationService";
 
 const Home = () => {
@@ -20,11 +21,11 @@ const Home = () => {
 
   let Content;
 
-  //   if (page == "login") {
-  Content = <Login handleClick={handleClick} />;
-  //   } else {
-  //     Content = <Register handleClick={handleClick} />;
-  //   }
+  if (page == "login") {
+    Content = <Login handleClick={handleClick} />;
+  } else {
+    Content = <Register handleClick={handleClick} />;
+  }
 
   return (
     <Container component="main" maxWidth="xs">

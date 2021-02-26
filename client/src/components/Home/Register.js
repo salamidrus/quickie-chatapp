@@ -135,7 +135,7 @@ const Register = (props) => {
                   onChange={handleChange}
                   type="password"
                 />
-                <Textfield
+                <TextField
                   id="confirmPassword"
                   className={classes.textField}
                   name="confirmPassword"
@@ -168,7 +168,7 @@ const Register = (props) => {
         </Grid>
         <Grid item xs={9}>
           <Typography>
-            <Link onClick={() => props.handleClick("login")} href="#">
+            <Link onClick={() => props.handleClick("login")}>
               Already have an account?
             </Link>
           </Typography>
@@ -177,3 +177,5 @@ const Register = (props) => {
     </div>
   );
 };
+
+export default Register;
