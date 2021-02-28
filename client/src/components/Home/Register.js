@@ -124,7 +124,7 @@ const Register = (props) => {
                   id="password"
                   className={classes.textField}
                   name="password"
-                  label="password"
+                  label="Password"
                   fullWidth={true}
                   variant="outlined"
                   margin="normal"
@@ -139,6 +139,7 @@ const Register = (props) => {
                   id="confirmPassword"
                   className={classes.textField}
                   name="confirmPassword"
+                  label="Confirm Password"
                   fullWidth={true}
                   variant="outlined"
                   margin="normal"

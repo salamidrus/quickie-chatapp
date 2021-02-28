@@ -4,23 +4,23 @@ import { useSnackbar } from "notistack";
 const useHandleResponse = () => {
   const { enqueueSnackbar } = useSnackbar();
 
-  const handleResponse = async (response) => {
-    let text = await response.text();
-    const data = text && JSON.parse(text);
+  const handleResponse = (response) => {
+    return response.text().then((text) => {
+      const data = text && JSON.parse(text);
+      if (!response.ok) {
+        if ([401, 403].indexOf(response.status) !== -1) {
+          authenticationService.logout();
+          enqueueSnackbar("User Unauthorized", {
+            variant: "error",
+          });
+        }
 
-    if (!response.ok) {
-      if ([401, 403].includes(response.status)) {
-        authenticationService.logout();
-        enqueueSnackbar("User Unauthorized", {
-          variant: "error",
-        });
+        const error = (data && data.message) || response.statusText;
+        return Promise.reject(error);
       }
 
-      const error = (data && data.message) || response.statusText;
-      return Promise.reject(error);
-    }
-
-    return data;
+      return data;
+    });
   };
 
   return handleResponse;

@@ -26,20 +26,22 @@ export function useLogin() {
       body: JSON.stringify({ username, password }),
     };
 
-    return fetch(`${process.env.REACT_APP_API_URL}/users/login`, requestOptions)
-      .then(handleResponse)
-      .then((user) => {
-        localStorage.setItem("currentUser", JSON.stringify(user));
-        currentUserSubject.next(user);
-        return user;
-      })
-      .catch(() => {
-        enqueueSnackbar("Failed to Login", {
-          variant: "error",
+    return new Promise((resolve, reject) => {
+      fetch(`${process.env.REACT_APP_API_URL}/api/users/login`, requestOptions)
+        .then(handleResponse)
+        .then((user) => {
+          localStorage.setItem("currentUser", JSON.stringify(user));
+          currentUserSubject.next(user);
+          resolve();
+        })
+        .catch((err) => {
+          enqueueSnackbar(`Failed to login: ${err}`, {
+            variant: "error",
+          });
+          reject(err);
         });
-      });
+    });
   };
-
   return login;
 }
 
@@ -47,27 +49,25 @@ export function useRegister() {
   const { enqueueSnackbar } = useSnackbar();
   const handleResponse = useHandleResponse();
 
-  const register = (name, username, password, confirmPassword) => {
+  const register = (name, username, password, password2) => {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, username, password, confirmPassword }),
+      body: JSON.stringify({ name, username, password, password2 }),
     };
 
     return fetch(
-      `${process.env.REACT_APP_API_URL}/users/register`,
+      `${process.env.REACT_APP_API_URL}/api/users/register`,
       requestOptions
     )
       .then(handleResponse)
       .then((user) => {
-        console.log(user);
         localStorage.setItem("currentUser", JSON.stringify(user));
         currentUserSubject.next(user);
 
         return user;
       })
-      .catch((response) => {
-        console.log(response);
+      .catch(function (response) {
         if (response) {
           enqueueSnackbar(response, {
             variant: "error",

@@ -39,33 +39,35 @@ const Login = (props) => {
             Sign in
           </Typography>
           <Formik
-            initialValues={{ username: "", password: "" }}
+            initialValues={{
+              username: "",
+              password: "",
+            }}
             validationSchema={Yup.object().shape({
               username: Yup.string()
                 .required("Username is required")
                 .max(40, "Username is too long"),
               password: Yup.string()
                 .required("Password is required")
-                .max(100, "Password is too long, maximum 100 chars")
-                .min(6, "Password too short, minimum 6 chars"),
+                .max(100, "Password is too long")
+                .min(6, "Password too short"),
             })}
             onSubmit={(
               { username, password },
               { setStatus, setSubmitting }
             ) => {
               setStatus();
-              login(username, password).then(
-                () => {
+              login(username, password)
+                .then(() => {
                   const { from } = history.location.state || {
                     from: { pathname: "/chat" },
                   };
                   history.push(from);
-                },
-                (error) => {
+                })
+                .catch((error) => {
                   setSubmitting(false);
                   setStatus(error);
-                }
-              );
+                });
             }}
           >
             {({ handleSubmit, handleChange, values, touched, errors }) => (
@@ -114,7 +116,7 @@ const Login = (props) => {
         </Grid>
         <Grid item xs={9}>
           <Typography>
-            <Link onClick={() => props.handleClick("register")}>
+            <Link onClick={() => props.handleClick("register")} href="#">
               Don't have an account?
             </Link>
           </Typography>
