@@ -32,10 +32,10 @@ export function useLogin() {
         .then((user) => {
           localStorage.setItem("currentUser", JSON.stringify(user));
           currentUserSubject.next(user);
-          resolve();
+          resolve(user);
         })
         .catch((err) => {
-          enqueueSnackbar(`Failed to login: ${err}`, {
+          enqueueSnackbar("Failed to login!", {
             variant: "error",
           });
           reject(err);
@@ -49,35 +49,31 @@ export function useRegister() {
   const { enqueueSnackbar } = useSnackbar();
   const handleResponse = useHandleResponse();
 
-  const register = (name, username, password, password2) => {
+  const register = (name, username, password, confirmPassword) => {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, username, password, password2 }),
+      body: JSON.stringify({ name, username, password, confirmPassword }),
     };
 
-    return fetch(
-      `${process.env.REACT_APP_API_URL}/api/users/register`,
-      requestOptions
-    )
-      .then(handleResponse)
-      .then((user) => {
-        localStorage.setItem("currentUser", JSON.stringify(user));
-        currentUserSubject.next(user);
-
-        return user;
-      })
-      .catch(function (response) {
-        if (response) {
-          enqueueSnackbar(response, {
+    return new Promise((resolve, reject) => {
+      fetch(
+        `${process.env.REACT_APP_API_URL}/api/users/register`,
+        requestOptions
+      )
+        .then(handleResponse)
+        .then((user) => {
+          localStorage.setItem("currentUser", JSON.stringify(user));
+          currentUserSubject.next(user);
+          resolve(user);
+        })
+        .catch((response) => {
+          enqueueSnackbar(response || "Failed to Register", {
             variant: "error",
           });
-        } else {
-          enqueueSnackbar("Failed to Register", {
-            variant: "error",
-          });
-        }
-      });
+          reject(response);
+        });
+    });
   };
 
   return register;

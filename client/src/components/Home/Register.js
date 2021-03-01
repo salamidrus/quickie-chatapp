@@ -67,18 +67,18 @@ const Register = (props) => {
               { setStatus, setSubmitting }
             ) => {
               setStatus();
-              register(name, username, password, confirmPassword).then(
-                () => {
+              register(name, username, password, confirmPassword)
+                .then(() => {
+                  console.log("Masuk register sukses");
                   const { from } = history.location.state || {
                     from: { pathname: "/chat" },
                   };
                   history.push(from);
-                },
-                (error) => {
+                })
+                .catch((error) => {
                   setSubmitting(false);
                   setStatus(error);
-                }
-              );
+                });
             }}
             validateOnChange={false}
             validateOnBlur={false}
