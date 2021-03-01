@@ -15,8 +15,6 @@ const useHandleResponse = () => {
           });
         }
 
-        console.log("Masuk eror handle respons");
-
         const error = (data && data.message) || response.statusText;
         return Promise.reject(error);
       }

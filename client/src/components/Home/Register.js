@@ -69,7 +69,6 @@ const Register = (props) => {
               setStatus();
               register(name, username, password, confirmPassword)
                 .then(() => {
-                  console.log("Masuk register sukses");
                   const { from } = history.location.state || {
                     from: { pathname: "/chat" },
                   };
