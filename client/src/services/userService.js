@@ -2,7 +2,7 @@ import useHandleResponse from "../utilities/handleResponse";
 import authHeader from "../utilities/authHeader";
 import { useSnackBar } from "notistack";
 
-export function userGetUsers() {
+export function useGetUsers() {
   const { enqueueSnackbar } = useSnackBar();
   const handleResponse = useHandleResponse();
   const requestOptions = {
