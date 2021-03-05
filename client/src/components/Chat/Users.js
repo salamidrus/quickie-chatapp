@@ -64,6 +64,7 @@ const Users = (props) => {
               <ListItemAvatar className={classes.avatar}>
                 <Avatar>{commonUtilites.getInitialsFromName(u.name)}</Avatar>
               </ListItemAvatar>
+              <ListItemText primary={u.name} />
             </ListItem>
           ))}
         </React.Fragment>
