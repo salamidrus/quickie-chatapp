@@ -12,7 +12,12 @@ const server = app.listen(port, () =>
   console.log(`Server running on port ${port}`)
 );
 
-const io = require("socket.io")(server, { serveClient: false });
+const io = require("socket.io")(server, {
+  serveClient: false,
+  cors: {
+    origin: "*",
+  },
+});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

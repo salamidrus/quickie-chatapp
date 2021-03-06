@@ -6,7 +6,9 @@ import { ThemeProvider } from "@material-ui/styles";
 import { SnackbarProvider } from "notistack";
 
 import history from "./utilities/history";
+import PrivateRoute from "./utilities/privateRoute";
 import Home from "./components/Home/Home";
+import Chat from "./components/Chat/Chat";
 
 const theme = createMuiTheme({
   palette: {
@@ -37,6 +39,7 @@ function App() {
       <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
         <Router history={history}>
           <Route path="/" exact component={Home} />
+          <PrivateRoute path="/chat" component={Chat} />
         </Router>
       </SnackbarProvider>
     </ThemeProvider>

@@ -52,7 +52,9 @@ const Conversations = (props) => {
   };
 
   useEffect(() => {
-    getConversations().then((res) => setConversations(res));
+    getConversations().then((res) => {
+      setConversations(res.data);
+    });
   }, [newConversation]);
 
   useEffect(() => {
@@ -89,19 +91,19 @@ const Conversations = (props) => {
               key={c._id}
               button
               onClick={() => {
-                props.setUser(handleRecipient(c.recipientObj));
-                props.setScope(handleRecipient(c.recipientObj).name);
+                props.setUser(handleRecipient(c.recipients));
+                props.setScope(handleRecipient(c.recipients).name);
               }}
             >
               <ListItemAvatar>
                 <Avatar>
                   {commonUtilities.getInitialsFromName(
-                    handleRecipient(c.recipientObj).name
+                    handleRecipient(c.recipients).name
                   )}
                 </Avatar>
               </ListItemAvatar>
               <ListItemText
-                primary={handleRecipient(c.recipientObj).name}
+                primary={handleRecipient(c.recipients).name}
                 secondary={<React.Fragment>{c.lastMessage}</React.Fragment>}
               />
             </ListItem>

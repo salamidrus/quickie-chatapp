@@ -110,10 +110,12 @@ const ChatBox = (props) => {
   const reloadMessages = () => {
     if (props.scope === "Global Chat") {
       getGlobalMessages().then((res) => {
-        setMessages(res);
+        setMessages(res.data);
       });
     } else if (props.scope !== null && props.conversationId !== null) {
-      getConversationMessages(props.user._id).then((res) => setMessages(res));
+      getConversationMessages(props.user._id).then((res) => {
+        setMessages(res.data);
+      });
     } else {
       setMessages();
     }
@@ -157,25 +159,23 @@ const ChatBox = (props) => {
                     key={m._id}
                     className={classnames(classes.listItem, {
                       [`${classes.listItemRight}`]:
-                        m.fromObj[0]._id === currentUserId,
+                        m.from._id === currentUserId,
                     })}
                     alignItems="flex-start"
                   >
                     <ListItemAvatar className={classes.avatar}>
                       <Avatar>
-                        {commonUtilities.getInitialsFromName(
-                          m.fromObj[0].className
-                        )}
+                        {commonUtilities.getInitialsFromName(m.from.name)}
                       </Avatar>
                     </ListItemAvatar>
                     <ListItemText
                       classes={{
                         root: classnames(classes.messageBubble, {
                           [`${classes.messageBubbleRight}`]:
-                            m.fromObj[0]._id === currentUserId,
+                            m.from._id === currentUserId,
                         }),
                       }}
-                      primary={m.fromObj[0] && m.fromObj[0].name}
+                      primary={m.from && m.from.name}
                       secondary={<React.Fragment>{m.body}</React.Fragment>}
                     />
                   </ListItem>
