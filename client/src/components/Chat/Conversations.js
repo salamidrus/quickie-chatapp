@@ -52,10 +52,12 @@ const Conversations = (props) => {
   };
 
   useEffect(() => {
-    getConversations().then((res) => {
-      console.log(res);
-      setConversations(res.data);
-    });
+    getConversations()
+      .then((res) => {
+        console.log(res);
+        setConversations(res.data);
+      })
+      .catch((err) => console.log(err));
   }, [newConversation]);
 
   useEffect(() => {
