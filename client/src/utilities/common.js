@@ -3,7 +3,7 @@ export default {
     const letters = String(name)
       .split(" ")
       .map((c) => {
-        return c.charAt(0);
+        return c.charAt(0).toUpperCase();
       });
     return letters.join("");
   },

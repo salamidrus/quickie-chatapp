@@ -51,7 +51,9 @@ exports.GetConversationsList = async (req, res) => {
       recipients: {
         $all: [{ $elemMatch: { $eq: from } }],
       },
-    }).populate("recipients", "-password");
+    })
+      .sort({ date: -1 })
+      .populate("recipients", "-password");
 
     res.status(200).json({
       success: true,

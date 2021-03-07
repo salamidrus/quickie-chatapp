@@ -23,9 +23,6 @@ import {
 import { authenticationService } from "../../services/authenticationService";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    height: "100%",
-  },
   headerRow: {
     maxHeight: 60,
     zIndex: 5,
@@ -34,15 +31,15 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    height: "100%",
-    color: theme.palette.primary.dark,
+    height: "48px",
+    color: theme.palette.primary.main,
   },
   messageContainer: {
     height: "100%",
     display: "flex",
-    alignContent: "flex-end",
+    alignContent: "flex-start",
   },
-  messageRow: {
+  messagesRow: {
     maxHeight: "calc(100vh - 184px)",
     overflowY: "auto",
   },
@@ -64,13 +61,13 @@ const useStyles = makeStyles((theme) => ({
   },
   inputRow: {
     display: "flex",
-    alignItems: "flex-end",
+    alignItems: "flex-start",
   },
   form: {
     width: "100%",
   },
   avatar: {
-    margin: theme.spacing(1, 1.15),
+    margin: theme.spacing(1, 1.5),
   },
   listItem: {
     display: "flex",
@@ -141,7 +138,7 @@ const ChatBox = (props) => {
   };
 
   return (
-    <Grid container className={classes.root}>
+    <Grid container>
       <Grid item xs={12} className={classes.headerRow}>
         <Paper className={classes.paper} square elevation={2}>
           <Typography color="inherit" variant="h6">

@@ -20,13 +20,13 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer",
   },
   globe: {
-    backgroundColor: theme.palette.primary.dark,
+    backgroundColor: theme.palette.primary.main,
   },
   subheaderText: {
-    color: theme.palette.primary.dark,
+    color: theme.palette.primary.main,
   },
   list: {
-    maxHeight: "calc(100vh - 112px",
+    height: "calc(100vh - 112px)",
     overflowY: "auto",
   },
 }));
@@ -82,7 +82,6 @@ const Conversations = (props) => {
         <ListItemText className={classes.subheaderText} primary="Global Chat" />
       </ListItem>
       <Divider />
-
       {conversations && (
         <React.Fragment>
           {conversations.map((c) => (

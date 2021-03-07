@@ -38,7 +38,7 @@ const Users = (props) => {
   const getUsers = useGetUsers();
 
   useEffect(() => {
-    getUsers().then((res) => setUsers(res));
+    getUsers().then((res) => setUsers(res.data));
   }, [newUser]);
 
   useEffect(() => {

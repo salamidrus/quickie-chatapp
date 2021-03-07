@@ -10,9 +10,9 @@ const bcrypt = require("bcryptjs");
 
 exports.GetAll = async (req, res) => {
   try {
-    let data = await User.find({ _id: { $ne: req.user.id } }).select(
-      "-password"
-    );
+    let data = await User.find({ _id: { $ne: req.user.id } })
+      .select("-password")
+      .sort({ name: "asc" });
 
     res.status(200).json({
       success: true,

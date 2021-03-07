@@ -1,9 +1,9 @@
 import useHandleResponse from "../utilities/handleResponse";
 import authHeader from "../utilities/authHeader";
-import { useSnackBar } from "notistack";
+import { useSnackbar } from "notistack";
 
 export function useGetUsers() {
-  const { enqueueSnackbar } = useSnackBar();
+  const { enqueueSnackbar } = useSnackbar();
   const handleResponse = useHandleResponse();
   const requestOptions = {
     method: "GET",

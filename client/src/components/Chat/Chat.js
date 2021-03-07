@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   sidebar: {
     zIndex: 8,
+    marginBottom: "20px",
   },
   subheader: {
     display: "flex",
@@ -45,7 +46,7 @@ const Chat = () => {
     <React.Fragment>
       <Header />
       <Grid container>
-        <Grid item md={4} className={classes.sidebar}>
+        <Grid item xs={12} md={4} className={classes.sidebar}>
           <Paper className={classes.paper} square elevation={5}>
             <Paper square>
               <Tabs
@@ -65,7 +66,7 @@ const Chat = () => {
             {tab === 1 && <Users setUser={setUser} setScope={setScope} />}
           </Paper>
         </Grid>
-        <Grid item md={8}>
+        <Grid item xs={12} md={8}>
           <ChatBox scope={scope} user={user} />
         </Grid>
       </Grid>

@@ -20,6 +20,8 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
     display: "flex",
+    justifyContent: "space-between",
+    marginBottom: "30px",
   },
   userDropdown: {
     marginLeft: theme.spacing(2),
@@ -28,9 +30,12 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: "auto",
     },
   },
+  logo: {
+    width: "10%",
+  },
 }));
 
-const Header = () => {
+function Header() {
   const [currentUser] = useState(authenticationService.currentUserValue);
   const [anchorEl, setAnchorEl] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -61,10 +66,10 @@ const Header = () => {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" className={classes.bgColor}>
         <Toolbar>
           <Link href="/" className={classes.title}>
-            <img src={logo} alt="Logo" />
+            <img src={logo} alt="Logo" className={classes.logo} />
           </Link>
           <Button
             aria-owns={anchorEl ? "simple-menu" : undefined}
@@ -97,6 +102,6 @@ const Header = () => {
       </AppBar>
     </div>
   );
-};
+}
 
 export default Header;
