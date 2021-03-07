@@ -12,6 +12,7 @@ import socketIOClient from "socket.io-client";
 import { useGetConversations } from "../../services/chatService";
 import { authenticationService } from "../../services/authenticationService";
 import commonUtilities from "../../utilities/common";
+import runtimeEnv from "@mars/heroku-js-runtime-env";
 
 const useStyles = makeStyles((theme) => ({
   subheader: {
@@ -58,7 +59,8 @@ const Conversations = (props) => {
   }, [newConversation]);
 
   useEffect(() => {
-    let socket = socketIOClient(process.env.REACT_APP_API_URL);
+    const env = runtimeEnv();
+    let socket = socketIOClient(env.REACT_APP_API_URL);
     socket.on("messages", (data) => setNewConversation(data));
 
     return () => {
