@@ -5,9 +5,9 @@ const useHandleResponse = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const handleResponse = (response) => {
-    return response.text().then((text) => {
+    return response.json().then((text) => {
       console.log(text, "--text");
-      const data = text && JSON.parse(text);
+      const data = text;
       if (!response.ok) {
         if ([401, 403].indexOf(response.status) !== -1) {
           authenticationService.logout();
