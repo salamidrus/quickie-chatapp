@@ -7,7 +7,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={(props) => {
-      console.log(props, "--props in private route");
       const currentUser = authenticationService.currentUserValue;
       if (!currentUser) {
         return (
