@@ -102,6 +102,7 @@ const ChatBox = (props) => {
 
   useEffect(() => {
     const env = runtimeEnv();
+    console.log(env.REACT_APP_API_URL);
     const socket = socketIOClient(env.REACT_APP_API_URL);
     socket.on("messages", (data) => setLastMessage(data));
   }, []);

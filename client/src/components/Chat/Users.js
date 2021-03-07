@@ -44,6 +44,7 @@ const Users = (props) => {
 
   useEffect(() => {
     const env = runtimeEnv();
+    console.log(env.REACT_APP_API_URL);
     const socket = socketIOClient(env.REACT_APP_API_URL);
     socket.on("users", (data) => {
       setNewUser(data);
