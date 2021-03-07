@@ -12,10 +12,7 @@ export function useGetGlobalMessages() {
   };
 
   const getGlobalMessages = () => {
-    return fetch(
-      `${process.env.REACT_APP_API_URL}/api/messages/global`,
-      requestOptions
-    )
+    return fetch("/api/messages/global", requestOptions)
       .then(handleResponse)
       .catch(() =>
         enqueueSnackbar("Could not load Global Chat", { variant: "error" })
@@ -37,10 +34,7 @@ export function useSendGlobalMessage() {
       body: JSON.stringify({ body: body, global: true }),
     };
 
-    return fetch(
-      `${process.env.REACT_APP_API_URL}/api/messages/global`,
-      requestOptions
-    )
+    return fetch("/api/messages/global", requestOptions)
       .then(handleResponse)
       .catch((err) => {
         console.log(err);
@@ -63,16 +57,14 @@ export function useGetConversations() {
   };
 
   const getConversations = () => {
-    return fetch(
-      `${process.env.REACT_APP_API_URL}/api/messages/conversations`,
-      requestOptions
-    )
+    return fetch("/api/messages/conversations", requestOptions)
       .then(handleResponse)
-      .catch(() =>
+      .catch((err) => {
+        console.log(err);
         enqueueSnackbar("Could not load chats", {
           variant: "error",
-        })
-      );
+        });
+      });
   };
 
   return getConversations;
@@ -90,7 +82,7 @@ export function useGetConversationMessages() {
 
   const getConversationMessages = (id) => {
     return fetch(
-      `${process.env.REACT_APP_API_URL}/api/messages/conversations/query?userId=${id}`,
+      `/api/messages/conversations/query?userId=${id}`,
       requestOptions
     )
       .then(handleResponse)
@@ -115,10 +107,7 @@ export function useSendConversationMessage() {
       body: JSON.stringify({ to: id, body: body }),
     };
 
-    return fetch(
-      `${process.env.REACT_APP_API_URL}/api/messages`,
-      requestOptions
-    )
+    return fetch("/api/messages", requestOptions)
       .then(handleResponse)
       .catch((err) => {
         console.log(err);
