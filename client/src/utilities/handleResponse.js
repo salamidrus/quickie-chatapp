@@ -6,7 +6,6 @@ const useHandleResponse = () => {
 
   const handleResponse = (response) => {
     return response.json().then((text) => {
-      console.log(text, "--text");
       const data = text;
       if (!response.ok) {
         if ([401, 403].indexOf(response.status) !== -1) {
@@ -17,7 +16,6 @@ const useHandleResponse = () => {
         }
 
         const error = (data && data.message) || response.statusText;
-        console.log(error, "--error");
         return Promise.reject(error);
       }
 
