@@ -59,7 +59,10 @@ const Conversations = (props) => {
   }, [newConversation]);
 
   useEffect(() => {
-    let socket = socketIOClient(process.env.REACT_APP_API_URL);
+    let socket = socketIOClient("/", {
+      transports: ["websocket"],
+      path: "/socket", // added this line of code
+    });
     socket.on("messages", (data) => setNewConversation(data));
 
     return () => {

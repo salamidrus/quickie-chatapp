@@ -15,6 +15,7 @@ const server = app.listen(port, () =>
 
 const io = require("socket.io")(server, {
   serveClient: false,
+  path: "/socket",
   cors: {
     origin: "*",
   },

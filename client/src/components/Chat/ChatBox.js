@@ -100,7 +100,10 @@ const ChatBox = (props) => {
   }, [lastMessage, props.scope, props.conversationId]);
 
   useEffect(() => {
-    const socket = socketIOClient(process.env.REACT_APP_API_URL);
+    const socket = socketIOClient("/", {
+      transports: ["websocket"],
+      path: "/socket", // added this line of code
+    });
     socket.on("messages", (data) => setLastMessage(data));
   }, []);
 

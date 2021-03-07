@@ -42,7 +42,10 @@ const Users = (props) => {
   }, [newUser]);
 
   useEffect(() => {
-    const socket = socketIOClient(process.env.REACT_APP_API_URL);
+    const socket = socketIOClient("/", {
+      transports: ["websocket"],
+      path: "/socket", // added this line of code
+    });
     socket.on("users", (data) => {
       setNewUser(data);
     });
