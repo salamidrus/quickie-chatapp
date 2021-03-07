@@ -12,7 +12,6 @@ import socketIOClient from "socket.io-client";
 import { useGetConversations } from "../../services/chatService";
 import { authenticationService } from "../../services/authenticationService";
 import commonUtilities from "../../utilities/common";
-import runtimeEnv from "@mars/heroku-js-runtime-env";
 
 const useStyles = makeStyles((theme) => ({
   subheader: {
