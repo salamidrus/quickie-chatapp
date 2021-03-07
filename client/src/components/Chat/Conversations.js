@@ -53,6 +53,7 @@ const Conversations = (props) => {
 
   useEffect(() => {
     getConversations().then((res) => {
+      console.log(res);
       setConversations(res.data);
     });
   }, [newConversation]);
