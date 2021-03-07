@@ -9,7 +9,6 @@ import socketIOClient from "socket.io-client";
 
 import { useGetUsers } from "../../services/userService";
 import commonUtilites from "../../utilities/common";
-import runtimeEnv from "@mars/heroku-js-runtime-env";
 
 const useStyles = makeStyles((theme) => ({
   subheader: {
@@ -43,9 +42,7 @@ const Users = (props) => {
   }, [newUser]);
 
   useEffect(() => {
-    const env = runtimeEnv();
-    console.log(env.REACT_APP_API_URL);
-    const socket = socketIOClient(env.REACT_APP_API_URL);
+    const socket = socketIOClient(process.env.REACT_APP_API_URL);
     socket.on("users", (data) => {
       setNewUser(data);
     });

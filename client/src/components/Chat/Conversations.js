@@ -59,9 +59,7 @@ const Conversations = (props) => {
   }, [newConversation]);
 
   useEffect(() => {
-    const env = runtimeEnv();
-    console.log(env.REACT_APP_API_URL);
-    let socket = socketIOClient(env.REACT_APP_API_URL);
+    let socket = socketIOClient(process.env.REACT_APP_API_URL);
     socket.on("messages", (data) => setNewConversation(data));
 
     return () => {

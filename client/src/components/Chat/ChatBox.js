@@ -21,7 +21,6 @@ import {
   useSendConversationMessage,
 } from "../../services/chatService";
 import { authenticationService } from "../../services/authenticationService";
-import runtimeEnv from "@mars/heroku-js-runtime-env";
 
 const useStyles = makeStyles((theme) => ({
   headerRow: {
@@ -101,9 +100,7 @@ const ChatBox = (props) => {
   }, [lastMessage, props.scope, props.conversationId]);
 
   useEffect(() => {
-    const env = runtimeEnv();
-    console.log(env.REACT_APP_API_URL);
-    const socket = socketIOClient(env.REACT_APP_API_URL);
+    const socket = socketIOClient(process.env.REACT_APP_API_URL);
     socket.on("messages", (data) => setLastMessage(data));
   }, []);
 

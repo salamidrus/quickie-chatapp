@@ -33,6 +33,7 @@ const theme = createMuiTheme({
 });
 
 function App() {
+  console.log(process.env.REACT_APP_API_URL);
   // Load the env object.
   return (
     <ThemeProvider theme={theme}>
