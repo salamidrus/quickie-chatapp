@@ -30,11 +30,13 @@ export function useLogin() {
       fetch(`${process.env.REACT_APP_API_URL}/api/users/login`, requestOptions)
         .then(handleResponse)
         .then((user) => {
+          console.log("user");
           localStorage.setItem("currentUser", JSON.stringify(user));
           currentUserSubject.next(user);
           resolve(user);
         })
         .catch((err) => {
+          console.log(err, "--error");
           enqueueSnackbar("Failed to login!", {
             variant: "error",
           });
