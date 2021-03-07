@@ -9,6 +9,7 @@ import history from "./utilities/history";
 import PrivateRoute from "./utilities/privateRoute";
 import Home from "./components/Home/Home";
 import Chat from "./components/Chat/Chat";
+require("dotenv").config();
 
 const theme = createMuiTheme({
   palette: {
